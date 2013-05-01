@@ -1,0 +1,82 @@
+
+* Introduction
+
+
+
+* Transformations
+
+Demonstrate that program transformations on code is useful. Describe
+rules, strategies, merging, etc. This chapter demonstrates simple
+transforms from a single library. 
+
+* Multiple transformations
+
+Show how groups of transformations from different libraries interact
+to improve code. Demonstrate that simply iterating over all rules will
+reach fixpoint if the individual rules are monotonic. Maybe show
+conditional constant propagation?
+
+* Analysis
+
+Demonstrate how rules can easily be extended to support bottom up and
+top down attributes. Explain that rewrites over a term are equivalent
+to attribute systems. By caching the results in the tree, you get
+reasonable performance. These attributes can also be persisted so it
+can be reused when compiling another module.
+
+I can do simple type checking and/or type-state checking (eg., ensure
+that an open file is always closed).
+
+* Scheduling 
+
+Show how the rules can be scheduled with a simple worklist. Whenever a
+replacement tree generates something that another rule might be
+interested in, the other rule is pushed onto the worklist. The rules
+can also specify a direction (topdown, bottomup, don't care) and a
+partial ordering.
+
+* Meta-rules
+
+Example: (define-generic + args ...)
+Example: implement case-lambda with "call forwarding"
+
+Rather than write a specific rule to handle +, write a general rule
+that applies to anything marked "generic". Answers the objection that
+every library writer will be forced to write specific rules.
+
+* Extended example
+
+Maybe integrate an OO library into Scheme? What's required for that?
+Copy some stuff from Self and Smalltalk.
+
+* Conclusion
+
+** Related work
+
+*** C++ Template Metaprogramming 
+
+It abuses C++ template expansion to do miraculous compile-time transformations. In particular, it depends on the compiler to perform constant folding at compile-time within enumerations. 
+
+*** Aspect oriented programming
+
+There are advanced examples of bizarre code manipulation using AOP. If
+they are suggesting you can do it with AOP, then my stuff can't be
+that bad.
+
+*** Embedded languages
+
+Paul Hudak's description of embedded languages is that it's a library
+that manipulates a data structure. Basically, you write an interpreter
+for what you want to do. Then you construct the AST using regular
+constructors. They claim that partial evaluation can fuse the
+interpreter with the "language" to produce a native
+implementation. This is another claim to a "sufficiently smart
+compiler".
+
+**** Macros 
+
+Lisp and Scheme make agressive use of macros to implement additional
+syntax and domain-specific languages.
+
+** Conclusion
+

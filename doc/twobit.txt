@@ -1,0 +1,50 @@
+From Will Clinger in comp.lang.scheme:
+
+Here is a list of some of the optimizations that are performed by the 
+current development version of Twobit, in subjective and approximate 
+order of importance.  Some of these are important only because Twobit 
+does not perform certain other optimizations.  Their importance is also 
+very application-specific, so the ordering should not be taken too 
+seriously.  All of the optimizations in this list are controlled by 
+compiler switches, and some (e.g. the last two) are disabled by default. 
+
+
+  Generate in-line code for primitive procedures. 
+  Improve code for known local procedures.  (Lambda lifting, etc.) 
+  Improve common subsequences of machine code.  (Peephole optimization.) 
+  Representation inference.  (Interprocedural.) 
+  Elimination of redundant expressions.  (Intraprocedural.) 
+  Constant propagation.  (Interprocedural.) 
+  Filling of SPARC branch delay slots. 
+  Inlining of known local procedures.  (Not well implemented yet.) 
+  Parallel assignment optimization. 
+  Inline allocation. 
+  Improve code for IF, AND, OR, COND, CASE. 
+  Elimination of branches to branches and locally redundant instructions. 
+  Assume that variables will not be assigned outside of the file in 
+    which they are defined.  (benchmark-block-mode; if you can fit an 
+    entire program into a single file, this mode becomes whole-program 
+    optimization) 
+  Assume that self-recursive global procedures will not be redefined. 
+    (benchmark-mode) 
+
+
+In addition, Twobit performs some optimizations that cannot be disabled, 
+so it is harder for me to estimate their importance.  They're pretty 
+important, though: 
+
+
+  On-the-fly register allocation. 
+  Frame optimization. 
+  Various source-to-source transformations that make opportunities 
+    for optimization easier to recognize. 
+
+
+Finally, I'd like to note that certain features of the Larceny runtime 
+are more important than many of Twobit's optimizations: 
+
+
+  Incremental stack/heap strategy for continuations. 
+  Generational garbage collection. 
+
+

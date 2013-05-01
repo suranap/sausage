@@ -1,0 +1,14 @@
+
+* Pattern match library
+
+** Separate the structures and pattern matcher into different libraries 
+** Add pattern guards to the matcher
+** Allow pattern predicates to take parameters (maybe guard is good enough?)
+** Translate define-structure to S48's define-record-type
+** Add support for record disclosers 
+
+
+* Sets 
+
+** Copy implementation of red-black trees from DrScheme's library
+

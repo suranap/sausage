@@ -1,0 +1,56 @@
+
+List of transformations and analysis that should be implemented
+
+* Can be implemented
+
+** Dead-code elimination
+** Constant and variable propagation
+** Constant folding
+** Common subexpression elimination
+** Use count
+
+
+* Should be implemented
+
+** Purity analysis
+
+So many optimizations depend on pure functions that it's important to
+get this info somehow. For now, assume an annotation. But if a
+procedure has no set-*! and no un-pure functions, it's also pure. 
+
+** Lambda optimizations
+** Recursion/letrec optimizations
+** Deforestation
+** Accumulator transformations
+
+Turn more recursive functions into tail-recursive loops by adding an
+accumulator. Lots of work already on this one.
+
+** Loop Fusion
+
+Sometimes higher-order iterators can be mashed together and inlined to
+produce faster loops.
+
+** Type inference
+
+Doesn't need to be a full type system. Might simply infer types
+whenever possible by looking at predicates (pair?) and well-known
+typed functions (list, map).
+
+** Higher order analyses
+
+For example, in the following:
+    (fold (lambda (v b) (insert v b)) bag values)
+
+I need to determine if the lambda will only make a pure modification
+to the bag and not use it again. I also must prove that b and bag are
+the same and will continue to be as the fold continues.
+
+This way I can convert it to:
+   (fold (lambda (v b) (insert! v b)) (insert (car values) bag) 
+
+Actually, this might be wrong. An insert doesn't return an *entirely*
+different bag, it tries to share as much of the original bag as it
+can. So I can't make a side-effect on the bag's shared structure. Only
+on the unshared parts. 
+
